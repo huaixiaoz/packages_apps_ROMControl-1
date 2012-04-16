@@ -191,6 +191,7 @@ public class UserInterface extends AOKPPreferenceFragment implements
                     Settings.System.putString(getActivity().getContentResolver(),
                             Settings.System.CUSTOM_CARRIER_LABEL, value);
                     updateCustomLabelTextSummary();
+		    Helpers.restartSystemUI();
                 }
             });
 
