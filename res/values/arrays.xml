@@ -491,6 +491,8 @@
 		<item>AIRPLANE_MODE</item>
 		<item>VIBRATE</item>
 		<item>SILENT</item>
+		<item>DATA</item>
+		<item>2G</item>
 		<item>TORCH</item>
 		<item>SYNC</item>
 		<item>SWAGGER</item>
@@ -504,6 +506,8 @@
 		<item>Airplane mode</item>
 		<item>Vibrate</item>
 		<item>Silent</item>
+		<item>Data</item>
+		<item>2G</item>
 		<item>Torch</item>
 		<item>Sync</item>
 		<item>Swagger</item>
