@@ -26,6 +26,7 @@ public class StatusBarGeneral extends AOKPPreferenceFragment implements
     private static final String PREF_ADB_ICON = "adb_icon";
     private static final String PREF_TRANSPARENCY = "status_bar_transparency";
     private static final String PREF_LAYOUT = "status_bar_layout";
+    private static final String PREF_FONTSIZE = "status_bar_fontsize";
 
     CheckBoxPreference mDefaultSettingsButtonBehavior;
     CheckBoxPreference mAutoHideToggles;
@@ -34,6 +35,7 @@ public class StatusBarGeneral extends AOKPPreferenceFragment implements
     CheckBoxPreference mAdbIcon;
     ListPreference mTransparency;
     ListPreference mLayout;
+    ListPreference mFontsize;
 
     Context mContext;
 
@@ -60,8 +62,8 @@ public class StatusBarGeneral extends AOKPPreferenceFragment implements
         mStatusBarBrightnessToggle.setChecked(Settings.System.getInt(mContext
                 .getContentResolver(), Settings.System.STATUS_BAR_BRIGHTNESS_TOGGLE,
                 0) == 1);
-
-	float defaultAlpha = Settings.System.getFloat(getActivity()
+        
+        float defaultAlpha = Settings.System.getFloat(getActivity()
                 .getContentResolver(), Settings.System.STATUS_BAR_ICON_TRANSPARENCY,
                 0.55f);
         mIconAlpha = (SeekBarPreference) findPreference("icon_transparency");
@@ -83,7 +85,12 @@ public class StatusBarGeneral extends AOKPPreferenceFragment implements
         mLayout.setValue(Integer.toString(Settings.System.getInt(getActivity()
                 .getContentResolver(), Settings.System.STATUS_BAR_LAYOUT,
                 0)));
-
+        
+        mFontsize = (ListPreference) findPreference(PREF_FONTSIZE);
+        mFontsize.setOnPreferenceChangeListener(this);
+        mFontsize.setValue(Integer.toString(Settings.System.getInt(getActivity()
+                .getContentResolver(), Settings.System.STATUSBAR_FONT_SIZE,
+                16)));
 
         if (mTablet) {
             PreferenceScreen prefs = getPreferenceScreen();
@@ -148,12 +155,17 @@ public class StatusBarGeneral extends AOKPPreferenceFragment implements
             result = Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUS_BAR_LAYOUT, val);
             Helpers.restartSystemUI();
-	} else if (preference == mIconAlpha) {
+        } else if (preference == mIconAlpha) {
             float val = Float.parseFloat((String) newValue);
             Settings.System.putFloat(getActivity().getContentResolver(),
                     Settings.System.STATUS_BAR_ICON_TRANSPARENCY,
                     val / 100);
             return true;
+        } else if (preference == mFontsize) {
+            int val = Integer.parseInt((String) newValue);
+            result = Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUSBAR_FONT_SIZE, val);
+            Helpers.restartSystemUI();
         }
         return result;
     }
