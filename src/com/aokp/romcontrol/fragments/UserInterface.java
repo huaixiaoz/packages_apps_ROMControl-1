@@ -39,6 +39,7 @@ public class UserInterface extends AOKPPreferenceFragment implements
     private static final String PREF_LONGPRESS_TO_KILL = "longpress_to_kill";
     private static final String PREF_ROTATION_ANIMATION = "rotation_animation_delay";
     private static final String PREF_180 = "rotate_180";
+    private static final String PREF_HOME_LONGPRESS = "long_press_home";
 
     CheckBoxPreference mCrtOnAnimation;
     CheckBoxPreference mCrtOffAnimation;
@@ -46,6 +47,7 @@ public class UserInterface extends AOKPPreferenceFragment implements
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mLongPressToKill;
     CheckBoxPreference mAllow180Rotation;
+    ListPreference mHomeLongpress;
     CheckBoxPreference mHorizontalAppSwitcher;
     Preference mCustomLabel;
     ListPreference mAnimationRotationDelay;
@@ -98,6 +100,13 @@ public class UserInterface extends AOKPPreferenceFragment implements
         mAllow180Rotation = (CheckBoxPreference) findPreference(PREF_180);
         mAllow180Rotation.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.ACCELEROMETER_ROTATION_ANGLES, (1 | 2 | 8)) == (1 | 2 | 4 | 8));
+
+	mHomeLongpress = (ListPreference) findPreference(PREF_HOME_LONGPRESS);
+        mHomeLongpress.setOnPreferenceChangeListener(this);
+        int lpv = Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.NAVIGATION_BAR_HOME_LONGPRESS, 0);
+        mHomeLongpress.setValue(lpv + "");
+        //mHomeLongpress.setSummary(getProperSummary(lpv));
 
         mHorizontalAppSwitcher = (CheckBoxPreference) findPreference("horizontal_recents_task_panel");
         mHorizontalAppSwitcher.setChecked(Settings.System.getInt(getActivity()
@@ -277,6 +286,13 @@ public class UserInterface extends AOKPPreferenceFragment implements
                     Settings.System.ACCELEROMETER_ROTATION_SETTLE_TIME,
                     Integer.parseInt((String) newValue));
 
+            return true;
+	} else if (preference == mHomeLongpress) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.NAVIGATION_BAR_HOME_LONGPRESS,
+                    Integer.parseInt((String) newValue));
+            int nV = Integer.valueOf(String.valueOf(newValue));
+                //preference.setSummary(getProperSummary(nV));
             return true;
         }
         return false;

@@ -63,7 +63,6 @@ public class Navbar extends AOKPPreferenceFragment implements
     private static final String PREF_NAVBAR_MENU_DISPLAY = "navbar_menu_display";
     private static final String PREF_NAV_COLOR = "nav_button_color";
     private static final String PREF_MENU_UNLOCK = "pref_menu_display";
-    private static final String PREF_HOME_LONGPRESS = "long_press_home";
     private static final String PREF_NAVBAR_QTY = "navbar_qty";
 
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
@@ -73,7 +72,6 @@ public class Navbar extends AOKPPreferenceFragment implements
     ColorPickerPreference mNavigationBarColor;
     ListPreference menuDisplayLocation;
     ListPreference mNavBarMenuDisplay;
-    ListPreference mHomeLongpress;
     ListPreference mGlowTimes;
     ListPreference mNavBarButtonQty;
     SeekBarPreference mButtonAlpha;
@@ -113,13 +111,6 @@ public class Navbar extends AOKPPreferenceFragment implements
         mNavBarMenuDisplay.setValue(Settings.System.getInt(getActivity()
                 .getContentResolver(), Settings.System.MENU_VISIBILITY,
                 0) + "");
-
-        mHomeLongpress = (ListPreference) findPreference(PREF_HOME_LONGPRESS);
-        mHomeLongpress.setOnPreferenceChangeListener(this);
-        int lpv = Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.NAVIGATION_BAR_HOME_LONGPRESS, 0);
-        mHomeLongpress.setValue(lpv + "");
-        mHomeLongpress.setSummary(getProperSummary(lpv));
 
         mNavBarButtonQty = (ListPreference) findPreference(PREF_NAVBAR_QTY);
         mNavBarButtonQty.setOnPreferenceChangeListener(this);
@@ -270,19 +261,6 @@ public class Navbar extends AOKPPreferenceFragment implements
             int intHex = ColorPickerPreference.convertToColorInt(hex);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.NAVIGATION_BAR_TINT, intHex);
-            return true;
-
-	} else if (preference == mHomeLongpress) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.NAVIGATION_BAR_HOME_LONGPRESS,
-                    Integer.parseInt((String) newValue));
-            int nV = Integer.valueOf(String.valueOf(newValue));
-            if (nV == 3) {
-                mCustomAppString = Settings.System.NAVIGATION_BAR_HOME_LONGPRESS_CUSTOMAPP;
-                mPicker.pickShortcut();
-            } else {
-                preference.setSummary(getProperSummary(nV));
-            }
             return true;
 
         } else if (preference == mNavBarButtonQty) {
@@ -642,7 +620,7 @@ public class Navbar extends AOKPPreferenceFragment implements
         }
 	if (Settings.System.putString(getActivity().getContentResolver(),
                 Settings.System.NAVIGATION_BAR_HOME_LONGPRESS_CUSTOMAPP, uri)) {
-                    mHomeLongpress.setSummary(friendlyName);
+                   // mHomeLongpress.setSummary(friendlyName);
         }
     }
 

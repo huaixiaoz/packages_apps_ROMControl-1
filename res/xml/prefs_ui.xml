@@ -63,6 +63,13 @@
 			android:defaultValue="true" />
 
 		<ListPreference
+			android:entries="@array/long_press_home_entries"
+			android:entryValues="@array/long_press_home_values"
+			android:key="long_press_home"
+			android:title="@string/long_press_home_title"
+			android:summary="@string/long_press_home_summary" />
+
+		<ListPreference
 			android:entries="@array/rotation_animation_delay_entries"
 			android:entryValues="@array/rotation_animation_delay_values"
 			android:key="rotation_animation_delay"
