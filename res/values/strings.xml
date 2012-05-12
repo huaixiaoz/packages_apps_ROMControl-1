@@ -120,8 +120,8 @@
 	<string name="clear_market_data_cleared">Market data cleared</string>
 	<string name="open_market_title">4. Open Market and hit accept</string>
 	<string name="open_market_summary">Press back when done to return here.</string>
-	<string name="custom_density_title">5. Change density to whatever you like!</string>
-	<string name="custom_density_summary">If you ever have compatibility issues with the market, be sure to return here and repeat the process.</string>
+	<string name="custom_density_title">5. Change density to whatever you like! </string>
+	<string name="custom_density_summary">If you ever have compatibility issues with the market, be sure to return here and repeat the process. 128 = TabletUI mode</string>
 	
     <!-- Lockscreens -->
     <string name="pref_lockscreen_layout_title">Lockscreen style</string>
